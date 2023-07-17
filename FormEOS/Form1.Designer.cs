@@ -204,12 +204,13 @@
             // 
             // lbCountDown
             // 
-            lbCountDown.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lbCountDown.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             lbCountDown.AutoSize = true;
             lbCountDown.BackColor = SystemColors.Control;
             lbCountDown.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point);
             lbCountDown.ForeColor = Color.Red;
-            lbCountDown.Location = new Point(455, 3);
+            lbCountDown.ImageAlign = ContentAlignment.TopCenter;
+            lbCountDown.Location = new Point(485, 31);
             lbCountDown.Name = "lbCountDown";
             lbCountDown.Size = new Size(109, 47);
             lbCountDown.TabIndex = 21;

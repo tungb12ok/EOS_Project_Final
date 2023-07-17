@@ -1,23 +1,72 @@
-﻿using System.Windows.Forms;
+﻿using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using Gma.System.MouseKeyHook;
+
 namespace FormEOS
 {
     public partial class Form1 : Form
     {
         private int countdown = 10; // Giá trị ban đầu của countdown
         private System.Windows.Forms.Timer timer;
+        private IKeyboardMouseEvents hookEvents;
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_CLOSE = 0xF060;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
+            {
+                // Ngăn chặn hành động đóng cửa sổ khi sử dụng phím tắt Windows
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
         public Form1()
         {
             InitializeComponent();
             KeyPreview = true;
 
+            hookEvents = Hook.GlobalEvents();
+            hookEvents.KeyDown += HookEvents_KeyDown;
+
+
         }
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+
+        private void HookEvents_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control || e.Alt || e.Shift || e.KeyCode == Keys.Escape)
+            if (e.Control && e.Alt && e.KeyCode == Keys.Delete)
             {
-                e.Handled = true; // Ngăn chặn xử lý các phím tắt
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                // Ngăn chặn phím tắt Ctrl + Alt + Delete
+            }
+            else if (e.Alt && e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                // Ngăn chặn phím tắt Alt + Tab
+            }
+            else if (e.KeyCode == Keys.LWin || e.KeyCode == Keys.RWin)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                // Ngăn chặn phím tắt Windows
             }
         }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if ((Control.ModifierKeys & Keys.Alt) != 0 && e.CloseReason == CloseReason.UserClosing)
+                {
+                    e.Cancel = true; // Hủy sự kiện đóng form nếu Alt + F4 được nhấn
+                }
+            }
+        }
+
+
+
         private void listView1_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, listView1.ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
