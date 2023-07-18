@@ -77,7 +77,7 @@
             btnFinish.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnFinish.AutoSize = true;
             btnFinish.BackColor = Color.Khaki;
-            btnFinish.Location = new Point(35, 440);
+            btnFinish.Location = new Point(35, 514);
             btnFinish.Name = "btnFinish";
             btnFinish.Size = new Size(75, 30);
             btnFinish.TabIndex = 30;
@@ -90,7 +90,7 @@
             cbFinish.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             cbFinish.AutoSize = true;
             cbFinish.ForeColor = Color.FromArgb(0, 0, 192);
-            cbFinish.Location = new Point(35, 415);
+            cbFinish.Location = new Point(35, 489);
             cbFinish.Name = "cbFinish";
             cbFinish.Size = new Size(196, 24);
             cbFinish.TabIndex = 29;
@@ -120,14 +120,14 @@
             progressBar1.ForeColor = Color.Lime;
             progressBar1.Location = new Point(530, 99);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(438, 23);
+            progressBar1.Size = new Size(626, 23);
             progressBar1.TabIndex = 26;
             // 
             // splitter2
             // 
             splitter2.Location = new Point(3, 0);
             splitter2.Name = "splitter2";
-            splitter2.Size = new Size(3, 480);
+            splitter2.Size = new Size(3, 554);
             splitter2.TabIndex = 25;
             splitter2.TabStop = false;
             // 
@@ -135,7 +135,7 @@
             // 
             splitter1.Location = new Point(0, 0);
             splitter1.Name = "splitter1";
-            splitter1.Size = new Size(3, 480);
+            splitter1.Size = new Size(3, 554);
             splitter1.TabIndex = 24;
             splitter1.TabStop = false;
             // 
@@ -203,6 +203,7 @@
             btnPre.TabIndex = 2;
             btnPre.Text = "pre";
             btnPre.UseVisualStyleBackColor = true;
+            btnPre.Click += btnPre_Click;
             // 
             // btnNext
             // 
@@ -212,6 +213,7 @@
             btnNext.TabIndex = 1;
             btnNext.Text = "next";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // cbA
             // 
@@ -235,7 +237,7 @@
             lbCountDown.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point);
             lbCountDown.ForeColor = Color.Red;
             lbCountDown.ImageAlign = ContentAlignment.TopCenter;
-            lbCountDown.Location = new Point(497, 31);
+            lbCountDown.Location = new Point(591, 31);
             lbCountDown.Name = "lbCountDown";
             lbCountDown.Size = new Size(137, 60);
             lbCountDown.TabIndex = 21;
@@ -295,7 +297,7 @@
             richTextBox1.Location = new Point(200, 142);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(768, 267);
+            richTextBox1.Size = new Size(956, 341);
             richTextBox1.TabIndex = 32;
             richTextBox1.Text = "";
             // 
@@ -304,7 +306,7 @@
             AutoScaleMode = AutoScaleMode.None;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1007, 480);
+            ClientSize = new Size(1195, 554);
             Controls.Add(richTextBox1);
             Controls.Add(label5);
             Controls.Add(btnFinish);

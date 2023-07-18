@@ -7,6 +7,9 @@ namespace FormEOS
     public partial class Form1 : Form
     {
         public EosFinalProjectContext Context = new EosFinalProjectContext();
+        public int indexQuestion = 0;
+        public List<Quiz> listQ;
+
 
         private int countdown = 10; // Giá trị ban đầu của countdown
         private System.Windows.Forms.Timer timer;
@@ -31,7 +34,7 @@ namespace FormEOS
 
             hookEvents = Hook.GlobalEvents();
             hookEvents.KeyDown += HookEvents_KeyDown;
-
+            listQ = Context.Quizzes.ToList(); ;
 
         }
 
@@ -85,7 +88,7 @@ namespace FormEOS
             // Set the numericUpDown1's Value to the font size
             numericUpDown1.Value = fontSize;
             // Gán văn bản mới cho RichTextBox
-            richTextBox1.Text = Context.Quizzes.FirstOrDefault(x => x.Id == 1).Question;
+            richTextBox1.Text = Context.Quizzes.FirstOrDefault(x => x.Id == indexQuestion).Question;
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -134,6 +137,15 @@ namespace FormEOS
             richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, fontSize);
         }
 
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            indexQuestion += 1;
+        }
+
+        private void btnPre_Click(object sender, EventArgs e)
+        {
+            indexQuestion -=1;
+        }
     }
 
 }
