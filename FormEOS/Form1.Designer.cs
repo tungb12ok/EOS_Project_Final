@@ -153,6 +153,7 @@
             groupBox1.Size = new Size(119, 228);
             groupBox1.TabIndex = 23;
             groupBox1.TabStop = false;
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // cbD
             // 

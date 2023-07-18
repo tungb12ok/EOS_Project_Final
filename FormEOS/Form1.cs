@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
 using DataAccess.Models;
+using DataAccess;
 namespace FormEOS
 {
     public partial class Form1 : Form
@@ -9,56 +10,57 @@ namespace FormEOS
         public EosFinalProjectContext Context = new EosFinalProjectContext();
         public int indexQuestion = 0;
         public List<Quiz> listQ;
+        Quiz q = new Quiz();
+        List<DataLog> logs = new List<DataLog>();
 
 
-        private int countdown = 10; // Giá trị ban đầu của countdown
+        private int countdown = 60 * 10; // Giá trị ban đầu của countdown
         private System.Windows.Forms.Timer timer;
         private IKeyboardMouseEvents hookEvents;
         private const int WM_SYSCOMMAND = 0x0112;
         private const int SC_CLOSE = 0xF060;
 
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
-            {
-                // Ngăn chặn hành động đóng cửa sổ khi sử dụng phím tắt Windows
-                return;
-            }
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
+        //    {
+        //        // Ngăn chặn hành động đóng cửa sổ khi sử dụng phím tắt Windows
+        //        return;
+        //    }
 
-            base.WndProc(ref m);
-        }
+        //    base.WndProc(ref m);
+        //}
         public Form1()
         {
             InitializeComponent();
             KeyPreview = true;
 
-            hookEvents = Hook.GlobalEvents();
-            hookEvents.KeyDown += HookEvents_KeyDown;
-            listQ = Context.Quizzes.ToList(); ;
+            //hookEvents = Hook.GlobalEvents();
+            //hookEvents.KeyDown += HookEvents_KeyDown;
 
         }
 
-        private void HookEvents_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.Alt && e.KeyCode == Keys.Delete)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-                // Ngăn chặn phím tắt Ctrl + Alt + Delete
-            }
-            else if (e.Alt && e.KeyCode == Keys.Tab)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-                // Ngăn chặn phím tắt Alt + Tab
-            }
-            else if (e.KeyCode == Keys.LWin || e.KeyCode == Keys.RWin)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-                // Ngăn chặn phím tắt Windows
-            }
-        }
+        //private void HookEvents_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Control && e.Alt && e.KeyCode == Keys.Delete)
+        //    {
+        //        e.Handled = true;
+        //        e.SuppressKeyPress = true;
+        //        // Ngăn chặn phím tắt Ctrl + Alt + Delete
+        //    }
+        //    else if (e.Alt && e.KeyCode == Keys.Tab)
+        //    {
+        //        e.Handled = true;
+        //        e.SuppressKeyPress = true;
+        //        // Ngăn chặn phím tắt Alt + Tab
+        //    }
+        //    else if (e.KeyCode == Keys.LWin || e.KeyCode == Keys.RWin)
+        //    {
+        //        e.Handled = true;
+        //        e.SuppressKeyPress = true;
+        //        // Ngăn chặn phím tắt Windows
+        //    }
+        //}
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -82,13 +84,9 @@ namespace FormEOS
 
             // Khởi động Timer
             timer.Start();
-            // set font 
-            int fontSize = (int)richTextBox1.Font.Size;
+            loadFormUI();
 
-            // Set the numericUpDown1's Value to the font size
-            numericUpDown1.Value = fontSize;
-            // Gán văn bản mới cho RichTextBox
-            richTextBox1.Text = Context.Quizzes.FirstOrDefault(x => x.Id == indexQuestion).Question;
+
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -139,13 +137,99 @@ namespace FormEOS
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            indexQuestion += 1;
+
+            indexQuestion++;
+            if (indexQuestion > listQ.Count - 1)
+            {
+                indexQuestion = 0;
+            }
+            String anwser = "";
+            if (cbA.Checked) { anwser += "A"; }
+            if (cbB.Checked) { anwser += "B"; }
+            if (cbC.Checked) { anwser += "C"; }
+            if (cbD.Checked) { anwser += "D"; }
+            if (logs.FirstOrDefault(x => x.Question == indexQuestion) == null)
+            {
+                DataLog log = new DataLog();
+                log.Question = indexQuestion;
+                log.Answers = anwser;
+                log.Results = q.Anwser.Equals(anwser);
+                logs.Add(log);
+            }
+            else
+            {
+                DataLog log = new DataLog();
+                log.Question = indexQuestion;
+                log.Answers = anwser;
+                log.Results = q.Anwser.Equals(anwser);
+            }
+            resetCheckBox();
+            if (q.Anwser == "A") { cbA.Checked = true; }
+            if (q.Anwser == "B") { cbB.Checked = true; }
+            if (q.Anwser == "C") { cbC.Checked = true; }
+            if (q.Anwser == "D") { cbD.Checked = true; }
+            loadFormUI();
         }
 
         private void btnPre_Click(object sender, EventArgs e)
         {
-            indexQuestion -=1;
+            indexQuestion--;
+            if (indexQuestion < 0)
+            {
+                indexQuestion = listQ.Count - 1;
+            }
+            String anwser = "";
+            if (cbA.Checked) { anwser += "A"; }
+            if (cbB.Checked) { anwser += "B"; }
+            if (cbC.Checked) { anwser += "C"; }
+            if (cbD.Checked) { anwser += "D"; }
+            if (logs.FirstOrDefault(x => x.Question == indexQuestion) == null)
+            {
+                DataLog log = new DataLog();
+                log.Question = indexQuestion;
+                log.Answers = anwser;
+                log.Results = q.Anwser.Equals(anwser);
+                logs.Add(log);
+            }
+            else
+            {
+                DataLog log = new DataLog();
+                log.Question = indexQuestion;
+                log.Answers = anwser;
+                log.Results = q.Anwser.Equals(anwser);
+            }
+            resetCheckBox();
+
+            if (q.Anwser == "A") { cbA.Checked = true; }
+            if (q.Anwser == "B") { cbB.Checked = true; }
+            if (q.Anwser == "C") { cbC.Checked = true; }
+            if (q.Anwser == "D") { cbD.Checked = true; }
+            loadFormUI();
+        }
+        public void loadFormUI()
+        {
+            // set font 
+            int fontSize = (int)richTextBox1.Font.Size;
+            // Set the numericUpDown1's Value to the font size
+            numericUpDown1.Value = fontSize;
+            // Gán văn bản mới cho RichTextBox
+            listQ = Context.Quizzes.ToList();
+            q = listQ[indexQuestion];
+            richTextBox1.Text = q.Question;
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+
+        public void resetCheckBox()
+        {
+            cbA.Checked = false;
+            cbB.Checked = false;
+            cbC.Checked = false;
+            cbD.Checked = false;
         }
     }
-
 }
