@@ -1,11 +1,13 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
-
+using DataAccess.Models;
 namespace FormEOS
 {
     public partial class Form1 : Form
     {
+        public EosFinalProjectContext Context = new EosFinalProjectContext();
+
         private int countdown = 10; // Giá trị ban đầu của countdown
         private System.Windows.Forms.Timer timer;
         private IKeyboardMouseEvents hookEvents;
@@ -83,10 +85,7 @@ namespace FormEOS
             // Set the numericUpDown1's Value to the font size
             numericUpDown1.Value = fontSize;
             // Gán văn bản mới cho RichTextBox
-            richTextBox1.Text = "Đây là văn bản mới.";
-
-            // Hoặc, bạn cũng có thể nối thêm văn bản vào nội dung hiện có
-            richTextBox1.Text += "\nThêm văn bản mới.";
+            richTextBox1.Text = Context.Quizzes.FirstOrDefault(x => x.Id == 1).Question;
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
