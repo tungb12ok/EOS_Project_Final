@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
 using DataAccess.Models;
 using DataAccess;
+using System.Diagnostics.Eventing.Reader;
+
 namespace FormEOS
 {
     public partial class Form1 : Form
@@ -10,9 +12,12 @@ namespace FormEOS
         public EosFinalProjectContext Context = new EosFinalProjectContext();
         public int indexQuestion = 0;
         public List<Quiz> listQ;
+        // quiz now
         Quiz q = new Quiz();
+        // ghi lại tiến trình làm bài
         List<DataLog> logs = new List<DataLog>();
-
+        // Data log current
+        DataLog dataLog;
 
         private int countdown = 60 * 10; // Giá trị ban đầu của countdown
         private System.Windows.Forms.Timer timer;
@@ -158,17 +163,18 @@ namespace FormEOS
             }
             else
             {
-                DataLog log = new DataLog();
-                log.Question = indexQuestion;
-                log.Answers = anwser;
-                log.Results = q.Anwser.Equals(anwser);
+                dataLog.Answers = anwser;
+                dataLog.Results = q.Anwser.Equals(anwser);
             }
             resetCheckBox();
-            if (q.Anwser == "A") { cbA.Checked = true; }
-            if (q.Anwser == "B") { cbB.Checked = true; }
-            if (q.Anwser == "C") { cbC.Checked = true; }
-            if (q.Anwser == "D") { cbD.Checked = true; }
             loadFormUI();
+            if (dataLog != null)
+            {
+                if (dataLog.Answers.Contains("A")) { cbA.Checked = true; }
+                if (dataLog.Answers.Contains("B")) { cbB.Checked = true; }
+                if (dataLog.Answers.Contains("C")) { cbC.Checked = true; }
+                if (dataLog.Answers.Contains("D")) { cbD.Checked = true; }
+            }
         }
 
         private void btnPre_Click(object sender, EventArgs e)
@@ -193,18 +199,18 @@ namespace FormEOS
             }
             else
             {
-                DataLog log = new DataLog();
-                log.Question = indexQuestion;
-                log.Answers = anwser;
-                log.Results = q.Anwser.Equals(anwser);
+                dataLog.Answers = anwser;
+                dataLog.Results = q.Anwser.Equals(anwser);
             }
             resetCheckBox();
-
-            if (q.Anwser == "A") { cbA.Checked = true; }
-            if (q.Anwser == "B") { cbB.Checked = true; }
-            if (q.Anwser == "C") { cbC.Checked = true; }
-            if (q.Anwser == "D") { cbD.Checked = true; }
             loadFormUI();
+            if (dataLog != null)
+            {
+                if (dataLog.Answers.Contains("A")) { cbA.Checked = true; }
+                if (dataLog.Answers.Contains("B")) { cbB.Checked = true; }
+                if (dataLog.Answers.Contains("C")) { cbC.Checked = true; }
+                if (dataLog.Answers.Contains("D")) { cbD.Checked = true; }
+            }
         }
         public void loadFormUI()
         {
@@ -216,6 +222,7 @@ namespace FormEOS
             listQ = Context.Quizzes.ToList();
             q = listQ[indexQuestion];
             richTextBox1.Text = q.Question;
+            getCurrenDataLog();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -230,6 +237,16 @@ namespace FormEOS
             cbB.Checked = false;
             cbC.Checked = false;
             cbD.Checked = false;
+        }
+        public void getCurrenDataLog()
+        {
+            if (logs.Count != 0)
+            {
+                if (indexQuestion < logs.Count)
+                {
+                    dataLog = logs[indexQuestion];
+                }
+            }
         }
     }
 }
