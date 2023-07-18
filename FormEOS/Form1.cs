@@ -67,10 +67,6 @@ namespace FormEOS
 
 
 
-        private void listView1_Paint(object sender, PaintEventArgs e)
-        {
-            ControlPaint.DrawBorder(e.Graphics, listView1.ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -81,6 +77,16 @@ namespace FormEOS
 
             // Khởi động Timer
             timer.Start();
+            // set font 
+            int fontSize = (int)richTextBox1.Font.Size;
+
+            // Set the numericUpDown1's Value to the font size
+            numericUpDown1.Value = fontSize;
+            // Gán văn bản mới cho RichTextBox
+            richTextBox1.Text = "Đây là văn bản mới.";
+
+            // Hoặc, bạn cũng có thể nối thêm văn bản vào nội dung hiện có
+            richTextBox1.Text += "\nThêm văn bản mới.";
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -115,6 +121,19 @@ namespace FormEOS
             }
         }
 
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            // Lấy giá trị mới từ numericUpDown1
+            int fontSize = (int)numericUpDown1.Value;
+
+            // Đặt kích cỡ chữ cho richTextBox1
+            richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, fontSize);
+        }
 
     }
 
