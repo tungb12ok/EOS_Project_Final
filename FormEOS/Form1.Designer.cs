@@ -77,7 +77,7 @@
             btnFinish.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnFinish.AutoSize = true;
             btnFinish.BackColor = Color.Khaki;
-            btnFinish.Location = new Point(35, 514);
+            btnFinish.Location = new Point(35, 519);
             btnFinish.Name = "btnFinish";
             btnFinish.Size = new Size(75, 30);
             btnFinish.TabIndex = 30;

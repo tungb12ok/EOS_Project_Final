@@ -4,6 +4,11 @@ using Gma.System.MouseKeyHook;
 using DataAccess.Models;
 using DataAccess;
 using System.Diagnostics.Eventing.Reader;
+using System.Xml;
+using System.IO;
+using Newtonsoft.Json;
+using Formatting = Newtonsoft.Json.Formatting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FormEOS
 {
@@ -25,24 +30,24 @@ namespace FormEOS
         private const int WM_SYSCOMMAND = 0x0112;
         private const int SC_CLOSE = 0xF060;
 
-        //protected override void WndProc(ref Message m)
-        //{
-        //    if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
-        //    {
-        //        // Ngăn chặn hành động đóng cửa sổ khi sử dụng phím tắt Windows
-        //        return;
-        //    }
 
-        //    base.WndProc(ref m);
-        //}
         public Form1()
         {
             InitializeComponent();
             KeyPreview = true;
-
-            //hookEvents = Hook.GlobalEvents();
+            //hookEvents = Hook.GlobalEvents(); 
             //hookEvents.KeyDown += HookEvents_KeyDown;
 
+        }
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
+            {
+                // Ngăn chặn hành động đóng cửa sổ khi sử dụng phím tắt Windows
+                return;
+            }
+
+            base.WndProc(ref m);
         }
 
         //private void HookEvents_KeyDown(object sender, KeyEventArgs e)
@@ -66,16 +71,16 @@ namespace FormEOS
         //        // Ngăn chặn phím tắt Windows
         //    }
         //}
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                if ((Control.ModifierKeys & Keys.Alt) != 0 && e.CloseReason == CloseReason.UserClosing)
-                {
-                    e.Cancel = true; // Hủy sự kiện đóng form nếu Alt + F4 được nhấn
-                }
-            }
-        }
+        //private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        //{
+        //    if (e.CloseReason == CloseReason.UserClosing)
+        //    {
+        //        if ((Control.ModifierKeys & Keys.Alt) != 0 && e.CloseReason == CloseReason.UserClosing)
+        //        {
+        //            e.Cancel = true; // Hủy sự kiện đóng form nếu Alt + F4 được nhấn
+        //        }
+        //    }
+        //}
 
 
 
@@ -120,6 +125,7 @@ namespace FormEOS
 
         private void btnFinish_Click_1(object sender, EventArgs e)
         {
+            SaveLogsToFile();
             if (cbFinish.Checked)
             {
                 Close();
@@ -158,13 +164,13 @@ namespace FormEOS
                 DataLog log = new DataLog();
                 log.Question = indexQuestion;
                 log.Answers = anwser;
-                log.Results = q.Anwser.Equals(anwser);
+                log.Results = q.Anwser.Contains(anwser);
                 logs.Add(log);
             }
             else
             {
                 dataLog.Answers = anwser;
-                dataLog.Results = q.Anwser.Equals(anwser);
+                dataLog.Results = q.Anwser.Contains(anwser);
             }
             resetCheckBox();
             loadFormUI();
@@ -194,13 +200,13 @@ namespace FormEOS
                 DataLog log = new DataLog();
                 log.Question = indexQuestion;
                 log.Answers = anwser;
-                log.Results = q.Anwser.Equals(anwser);
+                log.Results = q.Anwser.Contains(anwser);
                 logs.Add(log);
             }
             else
             {
                 dataLog.Answers = anwser;
-                dataLog.Results = q.Anwser.Equals(anwser);
+                dataLog.Results = q.Anwser.Contains(anwser);
             }
             resetCheckBox();
             loadFormUI();
@@ -222,6 +228,16 @@ namespace FormEOS
             listQ = Context.Quizzes.ToList();
             q = listQ[indexQuestion];
             richTextBox1.Text = q.Question;
+            int progress = 0;
+            foreach(DataLog log in logs)
+            {
+                if(!log.Answers.IsNullOrEmpty()) {
+                    progress++;
+                }
+            }
+            progressBar1.Minimum = 1;
+            progressBar1.Maximum = listQ.Count+1;
+            progressBar1.Value = progress+1;
             getCurrenDataLog();
         }
 
@@ -248,5 +264,25 @@ namespace FormEOS
                 }
             }
         }
+        private void SaveLogsToFile()
+        {
+            // Build the file path relative to the application's executable location
+            string logsFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataLog");
+            string logsFilePath = Path.Combine(logsFolderPath, "logs.json");
+
+            // Create the "DataLog" folder if it doesn't exist
+            if (!Directory.Exists(logsFolderPath))
+            {
+                Directory.CreateDirectory(logsFolderPath);
+            }
+
+            // Serialize the logs list to JSON
+            string logsJson = JsonConvert.SerializeObject(logs, Formatting.Indented);
+
+            // Save the JSON string to the log file
+            File.WriteAllText(logsFilePath, logsJson);
+        }
+
+        
     }
 }
