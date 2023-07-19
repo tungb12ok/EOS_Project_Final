@@ -12,4 +12,6 @@ public partial class User
     public string? Password { get; set; }
 
     public int? RoldId { get; set; }
+
+    public virtual ICollection<Result> Results { get; set; } = new List<Result>();
 }

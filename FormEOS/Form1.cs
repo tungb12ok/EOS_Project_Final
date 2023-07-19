@@ -9,6 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Formatting = Newtonsoft.Json.Formatting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic.Logging;
 
 namespace FormEOS
 {
@@ -115,7 +116,7 @@ namespace FormEOS
 
                 // Thực hiện các hành động khi countdown đạt 0
                 lbCountDown.Text = $"00:00";
-                MessageBox.Show("Countdown đạt 0!");
+                Close();
                 return;
             }
 
@@ -169,12 +170,20 @@ namespace FormEOS
                 log.Question = indexQuestion;
                 log.Answers = anwser;
                 log.Results = q.Anwser.Contains(anwser);
+                if (anwser == "")
+                {
+                    log.Results = false;
+                }
                 logs.Add(log);
             }
             else
             {
                 dataLog.Answers = anwser;
                 dataLog.Results = q.Anwser.Contains(anwser);
+                if (anwser == "")
+                {
+                    dataLog.Results = false;
+                }
             }
             resetCheckBox();
             loadFormUI();
@@ -205,12 +214,20 @@ namespace FormEOS
                 log.Question = indexQuestion;
                 log.Answers = anwser;
                 log.Results = q.Anwser.Contains(anwser);
+                if (anwser == "")
+                {
+                    log.Results = false;
+                }
                 logs.Add(log);
             }
             else
             {
                 dataLog.Answers = anwser;
                 dataLog.Results = q.Anwser.Contains(anwser);
+                if (anwser == "")
+                {
+                    dataLog.Results = false;
+                }
             }
             resetCheckBox();
             loadFormUI();
@@ -229,7 +246,7 @@ namespace FormEOS
             // Set the numericUpDown1's Value to the font size
             numericUpDown1.Value = fontSize;
             // Gán văn bản mới cho RichTextBox
-            listQ = Context.Quizzes.ToList();
+            listQ = Context.Quizzes.Where(x => x.TypeId == 1).ToList();
             q = listQ[indexQuestion];
             richTextBox1.Text = q.Question;
             int progress = 0;
@@ -271,9 +288,21 @@ namespace FormEOS
         }
         private void SaveLogsToFile()
         {
+            string username = loggedInUsername;
+            int count = 0;
+            foreach (DataLog log in logs)
+            {
+                if(log.Results == true)
+                {
+                    count++;
+                }
+            }
+
+            double rls = count/listQ.Count;
+
             // Build the file path relative to the application's executable location
             string logsFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataLog");
-            string logsFilePath = Path.Combine(logsFolderPath, "logs.json");
+            string logsFilePath = Path.Combine(logsFolderPath, loggedInUsername + "_" + loggedInCodeExam + ".json");
 
             // Create the "DataLog" folder if it doesn't exist
             if (!Directory.Exists(logsFolderPath))
@@ -281,12 +310,21 @@ namespace FormEOS
                 Directory.CreateDirectory(logsFolderPath);
             }
 
-            // Serialize the logs list to JSON
+            // Create a dictionary to hold the log data
+            var logData = new Dictionary<string, object>
+    {
+        { "Username", username },
+        { "Rls", rls }
+    };
             string logsJson = JsonConvert.SerializeObject(logs, Formatting.Indented);
+            // Serialize the logData dictionary to JSON
+             logsJson += "\n"+JsonConvert.SerializeObject(logData, Formatting.Indented);
 
             // Save the JSON string to the log file
             File.WriteAllText(logsFilePath, logsJson);
+            saveResult(username, loggedInCodeExam, rls);
         }
+
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -296,6 +334,18 @@ namespace FormEOS
         {
             loggedInUsername = username;
             loggedInCodeExam = codeexam;
+        }
+        public void saveResult(string username, string codeexam, double rls)
+        {
+            int userID = Context.Users.FirstOrDefault(x => x.Username == username).Id;
+            int typeID = Context.Types.FirstOrDefault(x => x.Code == codeexam).Id;
+
+            Result result = new Result();
+            result.UserId = userID;
+            result.Grade = rls;
+            result.TypeId = typeID;
+            Context.Results.Add(result);
+            Context.SaveChanges();
         }
     }
 }

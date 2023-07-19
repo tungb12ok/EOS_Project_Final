@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,23 +30,31 @@ namespace FormEOS
         {
             string enteredUsername = txtUsername.Text;
             string enteredPassword = txtPassword.Text;
-            
+            string enteredCodeExam = txtExamCode.Text;    
             User user = context.Users.FirstOrDefault(x => x.Username == enteredUsername && x.Password == enteredPassword);
-
-            if (user != null)
+            DataAccess.Models.Type t  = new DataAccess.Models.Type();
+            t = context.Types.FirstOrDefault(x => x.Code == enteredCodeExam);
+            if(t != null)
             {
-
-                // Login successful, open Form1
-                Form1 form1 = new Form1();
-                form1.SetLoginInfo(enteredUsername, txtExamCode.Text);
-                form1.Show();
-                // Close the current login form if necessary
-                this.Hide();
+                if (user != null)
+                {
+                    // Login successful, open Form1
+                    Form1 form1 = new Form1();
+                    form1.SetLoginInfo(enteredUsername, txtExamCode.Text);
+                    form1.Show();
+                    // Close the current login form if necessary
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password.");
+                }
             }
             else
             {
-                MessageBox.Show("Invalid username or password.");
+                MessageBox.Show("Invalid Exam code.");
             }
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)

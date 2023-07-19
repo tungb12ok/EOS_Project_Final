@@ -5,6 +5,8 @@ namespace DataAccess.Models;
 
 public partial class Result
 {
+    public int Id { get; set; }
+
     public int? UserId { get; set; }
 
     public int? TypeId { get; set; }

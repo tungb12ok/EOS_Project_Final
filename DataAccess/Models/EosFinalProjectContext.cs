@@ -33,9 +33,7 @@ public partial class EosFinalProjectContext : DbContext
 
             optionsBuilder.UseSqlServer(ConnectionStr);
         }
-
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Quiz>(entity =>
@@ -54,16 +52,15 @@ public partial class EosFinalProjectContext : DbContext
 
         modelBuilder.Entity<Result>(entity =>
         {
-            entity.HasNoKey();
-
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.TypeId).HasColumnName("TypeID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.Type).WithMany()
+            entity.HasOne(d => d.Type).WithMany(p => p.Results)
                 .HasForeignKey(d => d.TypeId)
                 .HasConstraintName("FK_Results_Type");
 
-            entity.HasOne(d => d.User).WithMany()
+            entity.HasOne(d => d.User).WithMany(p => p.Results)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_Results_User");
         });
