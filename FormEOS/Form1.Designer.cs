@@ -77,7 +77,7 @@
             btnFinish.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnFinish.AutoSize = true;
             btnFinish.BackColor = Color.Khaki;
-            btnFinish.Location = new Point(35, 519);
+            btnFinish.Location = new Point(35, 506);
             btnFinish.Name = "btnFinish";
             btnFinish.Size = new Size(75, 30);
             btnFinish.TabIndex = 30;
@@ -90,7 +90,7 @@
             cbFinish.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             cbFinish.AutoSize = true;
             cbFinish.ForeColor = Color.FromArgb(0, 0, 192);
-            cbFinish.Location = new Point(35, 489);
+            cbFinish.Location = new Point(35, 476);
             cbFinish.Name = "cbFinish";
             cbFinish.Size = new Size(196, 24);
             cbFinish.TabIndex = 29;
@@ -99,16 +99,18 @@
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new Point(455, 53);
+            numericUpDown1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            numericUpDown1.Location = new Point(440, 53);
             numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(33, 27);
+            numericUpDown1.Size = new Size(35, 27);
             numericUpDown1.TabIndex = 28;
             numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Location = new Point(393, 57);
+            label3.Location = new Point(378, 57);
             label3.Name = "label3";
             label3.Size = new Size(70, 20);
             label3.TabIndex = 27;
@@ -120,14 +122,14 @@
             progressBar1.ForeColor = Color.Lime;
             progressBar1.Location = new Point(530, 99);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(626, 23);
+            progressBar1.Size = new Size(490, 23);
             progressBar1.TabIndex = 26;
             // 
             // splitter2
             // 
             splitter2.Location = new Point(3, 0);
             splitter2.Name = "splitter2";
-            splitter2.Size = new Size(3, 554);
+            splitter2.Size = new Size(3, 541);
             splitter2.TabIndex = 25;
             splitter2.TabStop = false;
             // 
@@ -135,7 +137,7 @@
             // 
             splitter1.Location = new Point(0, 0);
             splitter1.Name = "splitter1";
-            splitter1.Size = new Size(3, 554);
+            splitter1.Size = new Size(3, 541);
             splitter1.TabIndex = 24;
             splitter1.TabStop = false;
             // 
@@ -148,9 +150,9 @@
             groupBox1.Controls.Add(btnPre);
             groupBox1.Controls.Add(btnNext);
             groupBox1.Controls.Add(cbA);
-            groupBox1.Location = new Point(35, 107);
+            groupBox1.Location = new Point(58, 177);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(119, 228);
+            groupBox1.Size = new Size(91, 233);
             groupBox1.TabIndex = 23;
             groupBox1.TabStop = false;
             groupBox1.Enter += groupBox1_Enter;
@@ -190,7 +192,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label4.ForeColor = Color.Blue;
-            label4.Location = new Point(38, 19);
+            label4.Location = new Point(6, 19);
             label4.Name = "label4";
             label4.Size = new Size(69, 23);
             label4.TabIndex = 3;
@@ -198,19 +200,21 @@
             // 
             // btnPre
             // 
-            btnPre.Location = new Point(15, 199);
+            btnPre.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnPre.Location = new Point(0, 199);
             btnPre.Name = "btnPre";
-            btnPre.Size = new Size(46, 23);
+            btnPre.Size = new Size(40, 28);
             btnPre.TabIndex = 2;
-            btnPre.Text = "pre";
+            btnPre.Text = "back";
             btnPre.UseVisualStyleBackColor = true;
             btnPre.Click += btnPre_Click;
             // 
             // btnNext
             // 
-            btnNext.Location = new Point(62, 199);
+            btnNext.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnNext.Location = new Point(46, 199);
             btnNext.Name = "btnNext";
-            btnNext.Size = new Size(41, 23);
+            btnNext.Size = new Size(42, 28);
             btnNext.TabIndex = 1;
             btnNext.Text = "next";
             btnNext.UseVisualStyleBackColor = true;
@@ -238,7 +242,7 @@
             lbCountDown.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point);
             lbCountDown.ForeColor = Color.Red;
             lbCountDown.ImageAlign = ContentAlignment.TopCenter;
-            lbCountDown.Location = new Point(591, 31);
+            lbCountDown.Location = new Point(495, 12);
             lbCountDown.Name = "lbCountDown";
             lbCountDown.Size = new Size(137, 60);
             lbCountDown.TabIndex = 21;
@@ -246,18 +250,22 @@
             // 
             // txtExamCode
             // 
+            txtExamCode.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            txtExamCode.Enabled = false;
             txtExamCode.Location = new Point(263, 49);
             txtExamCode.Name = "txtExamCode";
             txtExamCode.ReadOnly = true;
-            txtExamCode.Size = new Size(124, 27);
+            txtExamCode.Size = new Size(109, 27);
             txtExamCode.TabIndex = 20;
             // 
             // txtUsername
             // 
+            txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            txtUsername.Enabled = false;
             txtUsername.Location = new Point(263, 12);
             txtUsername.Name = "txtUsername";
             txtUsername.ReadOnly = true;
-            txtUsername.Size = new Size(124, 27);
+            txtUsername.Size = new Size(112, 27);
             txtUsername.TabIndex = 19;
             // 
             // label2
@@ -298,7 +306,7 @@
             richTextBox1.Location = new Point(200, 142);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(956, 341);
+            richTextBox1.Size = new Size(820, 328);
             richTextBox1.TabIndex = 32;
             richTextBox1.Text = "";
             // 
@@ -307,7 +315,7 @@
             AutoScaleMode = AutoScaleMode.None;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1195, 554);
+            ClientSize = new Size(1059, 541);
             Controls.Add(richTextBox1);
             Controls.Add(label5);
             Controls.Add(btnFinish);

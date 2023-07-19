@@ -15,7 +15,7 @@
             form1.FormBorderStyle = FormBorderStyle.None;
             form1.WindowState = FormWindowState.Maximized; // Hiển thị form toàn màn hình
 
-            Application.Run(form1);
+            Application.Run(new Login());
         }
 
     }

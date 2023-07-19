@@ -14,6 +14,9 @@ namespace FormEOS
 {
     public partial class Form1 : Form
     {
+        // Khai báo các thuộc tính để lưu trữ giá trị username và codeexam
+        private string loggedInUsername;
+        private string loggedInCodeExam;
         public EosFinalProjectContext Context = new EosFinalProjectContext();
         public int indexQuestion = 0;
         public List<Quiz> listQ;
@@ -91,7 +94,8 @@ namespace FormEOS
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000; // Cập nhật countdown mỗi giây
             timer.Tick += Timer_Tick;
-
+            txtUsername.Text = loggedInUsername;
+            txtExamCode.Text = loggedInCodeExam;
             // Khởi động Timer
             timer.Start();
             loadFormUI();
@@ -229,15 +233,16 @@ namespace FormEOS
             q = listQ[indexQuestion];
             richTextBox1.Text = q.Question;
             int progress = 0;
-            foreach(DataLog log in logs)
+            foreach (DataLog log in logs)
             {
-                if(!log.Answers.IsNullOrEmpty()) {
+                if (!log.Answers.IsNullOrEmpty())
+                {
                     progress++;
                 }
             }
             progressBar1.Minimum = 1;
-            progressBar1.Maximum = listQ.Count+1;
-            progressBar1.Value = progress+1;
+            progressBar1.Maximum = listQ.Count + 1;
+            progressBar1.Value = progress + 1;
             getCurrenDataLog();
         }
 
@@ -283,6 +288,14 @@ namespace FormEOS
             File.WriteAllText(logsFilePath, logsJson);
         }
 
-        
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        public void SetLoginInfo(string username, string codeexam)
+        {
+            loggedInUsername = username;
+            loggedInCodeExam = codeexam;
+        }
     }
 }
