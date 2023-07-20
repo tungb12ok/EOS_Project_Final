@@ -38,9 +38,12 @@ namespace FormEOS
         public Form1()
         {
             InitializeComponent();
+            // Bật chế độ toàn màn hình khi khởi tạo form
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
-            //hookEvents = Hook.GlobalEvents(); 
-            //hookEvents.KeyDown += HookEvents_KeyDown;
+            hookEvents = Hook.GlobalEvents();
+            hookEvents.KeyDown += HookEvents_KeyDown;
 
         }
         protected override void WndProc(ref Message m)
@@ -54,37 +57,37 @@ namespace FormEOS
             base.WndProc(ref m);
         }
 
-        //private void HookEvents_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Control && e.Alt && e.KeyCode == Keys.Delete)
-        //    {
-        //        e.Handled = true;
-        //        e.SuppressKeyPress = true;
-        //        // Ngăn chặn phím tắt Ctrl + Alt + Delete
-        //    }
-        //    else if (e.Alt && e.KeyCode == Keys.Tab)
-        //    {
-        //        e.Handled = true;
-        //        e.SuppressKeyPress = true;
-        //        // Ngăn chặn phím tắt Alt + Tab
-        //    }
-        //    else if (e.KeyCode == Keys.LWin || e.KeyCode == Keys.RWin)
-        //    {
-        //        e.Handled = true;
-        //        e.SuppressKeyPress = true;
-        //        // Ngăn chặn phím tắt Windows
-        //    }
-        //}
-        //private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        //{
-        //    if (e.CloseReason == CloseReason.UserClosing)
-        //    {
-        //        if ((Control.ModifierKeys & Keys.Alt) != 0 && e.CloseReason == CloseReason.UserClosing)
-        //        {
-        //            e.Cancel = true; // Hủy sự kiện đóng form nếu Alt + F4 được nhấn
-        //        }
-        //    }
-        //}
+        private void HookEvents_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Alt && e.KeyCode == Keys.Delete)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                // Ngăn chặn phím tắt Ctrl + Alt + Delete
+            }
+            else if (e.Alt && e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                // Ngăn chặn phím tắt Alt + Tab
+            }
+            else if (e.KeyCode == Keys.LWin || e.KeyCode == Keys.RWin)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                // Ngăn chặn phím tắt Windows
+            }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if ((Control.ModifierKeys & Keys.Alt) != 0 && e.CloseReason == CloseReason.UserClosing)
+                {
+                    e.Cancel = true; // Hủy sự kiện đóng form nếu Alt + F4 được nhấn
+                }
+            }
+        }
 
 
 
@@ -172,7 +175,7 @@ namespace FormEOS
                 log.Question = indexQuestion;
                 log.Answers = anwser;
                 log.Results = AreStringsEqualByCharacterSubset(q.Anwser, anwser);
-                
+
                 if (anwser == "")
                 {
                     log.Results = false;
@@ -295,7 +298,7 @@ namespace FormEOS
             int count = 0;
             foreach (DataLog i in logs)
             {
-                if(i.Results)
+                if (i.Results)
                 {
                     count++;
                 }
@@ -321,7 +324,7 @@ namespace FormEOS
             };
             string logsJson = JsonConvert.SerializeObject(logs, Formatting.Indented);
             // Serialize the logData dictionary to JSON
-             logsJson += "\n"+JsonConvert.SerializeObject(logData, Formatting.Indented);
+            logsJson += "\n" + JsonConvert.SerializeObject(logData, Formatting.Indented);
 
             // Save the JSON string to the log file
             File.WriteAllText(logsFilePath, logsJson);
@@ -350,7 +353,7 @@ namespace FormEOS
             Context.Results.Add(result);
             Context.SaveChanges();
         }
-        public  bool AreStringsEqualByCharacterSubset(string str1, string str2)
+        public bool AreStringsEqualByCharacterSubset(string str1, string str2)
         {
             str1 = str1.Trim();
             str2 = str2.Trim();
