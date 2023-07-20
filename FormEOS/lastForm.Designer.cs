@@ -41,6 +41,7 @@
             btnFinish = new Button();
             cbFinish = new CheckBox();
             label5 = new Label();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -181,11 +182,23 @@
             label5.TabIndex = 41;
             label5.Text = "Save at server successfull!";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = Color.Blue;
+            label4.Location = new Point(117, 469);
+            label4.Name = "label4";
+            label4.Size = new Size(214, 19);
+            label4.TabIndex = 42;
+            label4.Text = "Save at server successffuly!";
+            // 
             // lastForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(927, 510);
+            Controls.Add(label4);
             Controls.Add(label5);
             Controls.Add(richTextBox1);
             Controls.Add(btnFinish);
@@ -219,5 +232,6 @@
         private Button btnFinish;
         private CheckBox cbFinish;
         private Label label5;
+        private Label label4;
     }
 }

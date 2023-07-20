@@ -131,6 +131,8 @@ namespace FormEOS
         private void btnFinish_Click_1(object sender, EventArgs e)
         {
             SaveLogsToFile();
+            lastForm lf = new lastForm();
+            lf.Show();
             if (cbFinish.Checked)
             {
                 Close();
@@ -169,7 +171,8 @@ namespace FormEOS
                 DataLog log = new DataLog();
                 log.Question = indexQuestion;
                 log.Answers = anwser;
-                log.Results = q.Anwser.Contains(anwser);
+                log.Results = AreStringsEqualByCharacterSubset(q.Anwser, anwser);
+                
                 if (anwser == "")
                 {
                     log.Results = false;
@@ -179,7 +182,7 @@ namespace FormEOS
             else
             {
                 dataLog.Answers = anwser;
-                dataLog.Results = q.Anwser.Contains(anwser);
+                dataLog.Results = AreStringsEqualByCharacterSubset(q.Anwser, anwser);
                 if (anwser == "")
                 {
                     dataLog.Results = false;
@@ -213,7 +216,7 @@ namespace FormEOS
                 DataLog log = new DataLog();
                 log.Question = indexQuestion;
                 log.Answers = anwser;
-                log.Results = q.Anwser.Contains(anwser);
+                log.Results = AreStringsEqualByCharacterSubset(q.Anwser, anwser);
                 if (anwser == "")
                 {
                     log.Results = false;
@@ -223,7 +226,7 @@ namespace FormEOS
             else
             {
                 dataLog.Answers = anwser;
-                dataLog.Results = q.Anwser.Contains(anwser);
+                dataLog.Results = AreStringsEqualByCharacterSubset(q.Anwser, anwser);
                 if (anwser == "")
                 {
                     dataLog.Results = false;
@@ -290,16 +293,16 @@ namespace FormEOS
         {
             string username = loggedInUsername;
             int count = 0;
-            foreach (DataLog log in logs)
+            foreach (DataLog i in logs)
             {
-                if(log.Results == true)
+                if(i.Results)
                 {
                     count++;
                 }
             }
 
-            double rls = count/listQ.Count;
-
+            double rls = (double)count / listQ.Count * 10;
+            rls = Math.Round(rls, 2);
             // Build the file path relative to the application's executable location
             string logsFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataLog");
             string logsFilePath = Path.Combine(logsFolderPath, loggedInUsername + "_" + loggedInCodeExam + ".json");
@@ -312,10 +315,10 @@ namespace FormEOS
 
             // Create a dictionary to hold the log data
             var logData = new Dictionary<string, object>
-    {
-        { "Username", username },
-        { "Rls", rls }
-    };
+             {
+            { "Username", username },
+                { "Rls", rls }
+            };
             string logsJson = JsonConvert.SerializeObject(logs, Formatting.Indented);
             // Serialize the logData dictionary to JSON
              logsJson += "\n"+JsonConvert.SerializeObject(logData, Formatting.Indented);
@@ -346,6 +349,29 @@ namespace FormEOS
             result.TypeId = typeID;
             Context.Results.Add(result);
             Context.SaveChanges();
+        }
+        public  bool AreStringsEqualByCharacterSubset(string str1, string str2)
+        {
+            str1 = str1.Trim();
+            str2 = str2.Trim();
+            if (str1 == null || str2 == null || str1.Length != str2.Length)
+                return false;
+
+            char[] charArray1 = str1.ToCharArray();
+            char[] charArray2 = str2.ToCharArray();
+
+            Array.Sort(charArray1);
+            Array.Sort(charArray2);
+
+            for (int i = 0; i < charArray1.Length; i++)
+            {
+                if (charArray1[i] != charArray2[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
