@@ -68,7 +68,7 @@
             label5.ForeColor = Color.Blue;
             label5.Location = new Point(200, 107);
             label5.Name = "label5";
-            label5.Size = new Size(325, 15);
+            label5.Size = new Size(414, 20);
             label5.TabIndex = 31;
             label5.Text = "There are 40 questions, and your progress of answering is";
             // 
@@ -90,9 +90,9 @@
             cbFinish.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             cbFinish.AutoSize = true;
             cbFinish.ForeColor = Color.FromArgb(0, 0, 192);
-            cbFinish.Location = new Point(35, 481);
+            cbFinish.Location = new Point(35, 476);
             cbFinish.Name = "cbFinish";
-            cbFinish.Size = new Size(159, 19);
+            cbFinish.Size = new Size(196, 24);
             cbFinish.TabIndex = 29;
             cbFinish.Text = "I want to finish the exam.";
             cbFinish.UseVisualStyleBackColor = true;
@@ -102,7 +102,7 @@
             numericUpDown1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             numericUpDown1.Location = new Point(440, 53);
             numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(35, 23);
+            numericUpDown1.Size = new Size(35, 27);
             numericUpDown1.TabIndex = 28;
             numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
             // 
@@ -112,7 +112,7 @@
             label3.AutoSize = true;
             label3.Location = new Point(378, 57);
             label3.Name = "label3";
-            label3.Size = new Size(56, 15);
+            label3.Size = new Size(70, 20);
             label3.TabIndex = 27;
             label3.Text = "Font size:";
             // 
@@ -162,7 +162,7 @@
             cbD.AutoSize = true;
             cbD.Location = new Point(6, 135);
             cbD.Name = "cbD";
-            cbD.Size = new Size(34, 19);
+            cbD.Size = new Size(42, 24);
             cbD.TabIndex = 32;
             cbD.Text = "D";
             cbD.UseVisualStyleBackColor = true;
@@ -172,7 +172,7 @@
             cbC.AutoSize = true;
             cbC.Location = new Point(6, 105);
             cbC.Name = "cbC";
-            cbC.Size = new Size(34, 19);
+            cbC.Size = new Size(40, 24);
             cbC.TabIndex = 32;
             cbC.Text = "C";
             cbC.UseVisualStyleBackColor = true;
@@ -182,7 +182,7 @@
             cbB.AutoSize = true;
             cbB.Location = new Point(6, 75);
             cbB.Name = "cbB";
-            cbB.Size = new Size(33, 19);
+            cbB.Size = new Size(40, 24);
             cbB.TabIndex = 4;
             cbB.Text = "B";
             cbB.UseVisualStyleBackColor = true;
@@ -194,7 +194,7 @@
             label4.ForeColor = Color.Blue;
             label4.Location = new Point(6, 19);
             label4.Name = "label4";
-            label4.Size = new Size(53, 17);
+            label4.Size = new Size(69, 23);
             label4.TabIndex = 3;
             label4.Text = "Answer";
             // 
@@ -225,7 +225,7 @@
             cbA.AutoSize = true;
             cbA.Location = new Point(6, 45);
             cbA.Name = "cbA";
-            cbA.Size = new Size(34, 19);
+            cbA.Size = new Size(41, 24);
             cbA.TabIndex = 0;
             cbA.Text = "A";
             cbA.UseVisualStyleBackColor = true;
@@ -244,7 +244,7 @@
             lbCountDown.ImageAlign = ContentAlignment.TopCenter;
             lbCountDown.Location = new Point(495, 12);
             lbCountDown.Name = "lbCountDown";
-            lbCountDown.Size = new Size(109, 47);
+            lbCountDown.Size = new Size(137, 60);
             lbCountDown.TabIndex = 21;
             lbCountDown.Text = "00:00";
             // 
@@ -255,7 +255,7 @@
             txtExamCode.Location = new Point(263, 49);
             txtExamCode.Name = "txtExamCode";
             txtExamCode.ReadOnly = true;
-            txtExamCode.Size = new Size(109, 23);
+            txtExamCode.Size = new Size(109, 27);
             txtExamCode.TabIndex = 20;
             // 
             // txtUsername
@@ -265,7 +265,7 @@
             txtUsername.Location = new Point(263, 12);
             txtUsername.Name = "txtUsername";
             txtUsername.ReadOnly = true;
-            txtUsername.Size = new Size(112, 23);
+            txtUsername.Size = new Size(112, 27);
             txtUsername.TabIndex = 19;
             // 
             // label2
@@ -275,7 +275,7 @@
             label2.ForeColor = Color.Blue;
             label2.Location = new Point(149, 47);
             label2.Name = "label2";
-            label2.Size = new Size(108, 25);
+            label2.Size = new Size(134, 32);
             label2.TabIndex = 18;
             label2.Text = "ExamCode:";
             // 
@@ -286,7 +286,7 @@
             label1.ForeColor = Color.Blue;
             label1.Location = new Point(149, 12);
             label1.Name = "label1";
-            label1.Size = new Size(103, 25);
+            label1.Size = new Size(130, 32);
             label1.TabIndex = 17;
             label1.Text = "Username:";
             // 
@@ -309,6 +309,7 @@
             richTextBox1.Size = new Size(820, 328);
             richTextBox1.TabIndex = 32;
             richTextBox1.Text = "";
+            richTextBox1.TextChanged += richTextBox1_TextChanged_1;
             // 
             // Form1
             // 

@@ -28,7 +28,7 @@ namespace FormEOS
         // Data log current
         DataLog dataLog;
 
-        private int countdown = 60 * 10; // Giá trị ban đầu của countdown
+        private int countdown; // Giá trị ban đầu của countdown
         private System.Windows.Forms.Timer timer;
         private IKeyboardMouseEvents hookEvents;
         private const int WM_SYSCOMMAND = 0x0112;
@@ -44,7 +44,6 @@ namespace FormEOS
             KeyPreview = true;
             hookEvents = Hook.GlobalEvents();
             hookEvents.KeyDown += HookEvents_KeyDown;
-
         }
         protected override void WndProc(ref Message m)
         {
@@ -120,7 +119,8 @@ namespace FormEOS
                 // Thực hiện các hành động khi countdown đạt 0
                 lbCountDown.Text = $"00:00";
                 Close();
-                return;
+                lastForm lf = new lastForm();
+                lf.Show();
             }
 
             // Tính toán phút và giây từ giá trị countdown
@@ -251,8 +251,9 @@ namespace FormEOS
             int fontSize = (int)richTextBox1.Font.Size;
             // Set the numericUpDown1's Value to the font size
             numericUpDown1.Value = fontSize;
+            DataAccess.Models.Type type = Context.Types.FirstOrDefault(x => x.Code == loggedInCodeExam);
             // Gán văn bản mới cho RichTextBox
-            listQ = Context.Quizzes.Where(x => x.TypeId == 1).ToList();
+            listQ = Context.Quizzes.Where(x => x.TypeId == type.Id).ToList();
             q = listQ[indexQuestion];
             richTextBox1.Text = q.Question;
             int progress = 0;
@@ -336,10 +337,11 @@ namespace FormEOS
         {
 
         }
-        public void SetLoginInfo(string username, string codeexam)
+        public void SetLoginInfo(string username, string codeexam, int input_countdown)
         {
             loggedInUsername = username;
             loggedInCodeExam = codeexam;
+            countdown = input_countdown;
         }
         public void saveResult(string username, string codeexam, double rls)
         {
@@ -375,6 +377,11 @@ namespace FormEOS
             }
 
             return true;
+        }
+
+        private void richTextBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

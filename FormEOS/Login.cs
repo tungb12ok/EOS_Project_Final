@@ -19,6 +19,7 @@ namespace FormEOS
         public Login()
         {
             InitializeComponent();
+            this.AcceptButton = btnLogin;
         }
 
         private void Login_Load(object sender, EventArgs e)
@@ -30,36 +31,71 @@ namespace FormEOS
         {
             string enteredUsername = txtUsername.Text;
             string enteredPassword = txtPassword.Text;
-            string enteredCodeExam = txtExamCode.Text;    
-            User user = context.Users.FirstOrDefault(x => x.Username == enteredUsername && x.Password == enteredPassword);
-            DataAccess.Models.Type t  = new DataAccess.Models.Type();
-            t = context.Types.FirstOrDefault(x => x.Code == enteredCodeExam);
-            if(t != null)
+            string enteredCodeExam = txtExamCode.Text;
+            User user = context.Users.SingleOrDefault(x => x.Username == enteredUsername && x.Password == enteredPassword);
+            DataAccess.Models.Type t = new DataAccess.Models.Type();
+            t = context.Types.SingleOrDefault(x => x.Code == enteredCodeExam);
+
+            if (user != null)
             {
-                if (user != null)
+                Result rls = context.Results.FirstOrDefault(x => x.User == user && x.TypeId == t.Id);
+
+                if (rls != null)
+                {
+                    MessageBox.Show("Code is expired!");
+                }
+                else if (t == null)
+                {
+                    MessageBox.Show("Code invalid!");
+                }
+                else if (user.RoldId != 2)
+                {
+                    MessageBox.Show("You must be student!");
+                }
+                else
                 {
                     // Login successful, open Form1
                     Form1 form1 = new Form1();
-                    form1.SetLoginInfo(enteredUsername, txtExamCode.Text);
+                    form1.SetLoginInfo(enteredUsername, txtExamCode.Text, t.Time * 60);
                     form1.Show();
                     // Close the current login form if necessary
                     this.Hide();
                 }
-                else
-                {
-                    MessageBox.Show("Invalid username or password.");
-                }
             }
             else
             {
-                MessageBox.Show("Invalid Exam code.");
+                MessageBox.Show("Invalid username or password.");
             }
-
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
     }
+
+    private void btnClose_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
+
+    private void label2_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void label3_Click(object sender, EventArgs e)
+    {
+    }
+
+    private void txtUsername_TextChanged(object sender, EventArgs e)
+    {
+    }
+
+    private void txtPassword_TextChanged(object sender, EventArgs e)
+    {
+    }
+
+    private void txtExamCode_TextChanged(object sender, EventArgs e)
+    {
+    }
+
+    private void label1_Click(object sender, EventArgs e)
+    {
+    }
+}
 }
