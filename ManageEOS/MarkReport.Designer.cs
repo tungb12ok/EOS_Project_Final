@@ -78,11 +78,11 @@
             // 
             // btnImport
             // 
-            btnImport.Location = new Point(252, 550);
+            btnImport.Location = new Point(224, 544);
             btnImport.Name = "btnImport";
-            btnImport.Size = new Size(94, 29);
+            btnImport.Size = new Size(169, 29);
             btnImport.TabIndex = 4;
-            btnImport.Text = "Import";
+            btnImport.Text = "Export Mark to Excel";
             btnImport.UseVisualStyleBackColor = true;
             btnImport.Click += btnImport_Click;
             // 

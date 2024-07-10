@@ -82,7 +82,7 @@
             // 
             // btnLoad
             // 
-            btnLoad.Location = new Point(113, 547);
+            btnLoad.Location = new Point(879, 354);
             btnLoad.Name = "btnLoad";
             btnLoad.Size = new Size(94, 29);
             btnLoad.TabIndex = 6;
@@ -103,17 +103,17 @@
             // 
             // btnAddType
             // 
-            btnAddType.Location = new Point(266, 547);
+            btnAddType.Location = new Point(113, 547);
             btnAddType.Name = "btnAddType";
-            btnAddType.Size = new Size(94, 29);
+            btnAddType.Size = new Size(138, 29);
             btnAddType.TabIndex = 8;
-            btnAddType.Text = "Add Type";
+            btnAddType.Text = "Creae Exam";
             btnAddType.UseVisualStyleBackColor = true;
             btnAddType.Click += btnAddType_Click;
             // 
             // btnMarkReport
             // 
-            btnMarkReport.Location = new Point(410, 547);
+            btnMarkReport.Location = new Point(283, 547);
             btnMarkReport.Name = "btnMarkReport";
             btnMarkReport.Size = new Size(105, 29);
             btnMarkReport.TabIndex = 9;
@@ -143,19 +143,19 @@
             // 
             txtUsername.Location = new Point(753, 240);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(183, 27);
+            txtUsername.Size = new Size(220, 27);
             txtUsername.TabIndex = 12;
             // 
             // txtpass
             // 
             txtpass.Location = new Point(753, 303);
             txtpass.Name = "txtpass";
-            txtpass.Size = new Size(183, 27);
+            txtpass.Size = new Size(220, 27);
             txtpass.TabIndex = 13;
             // 
             // btnCreate
             // 
-            btnCreate.Location = new Point(729, 410);
+            btnCreate.Location = new Point(753, 354);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(94, 29);
             btnCreate.TabIndex = 14;

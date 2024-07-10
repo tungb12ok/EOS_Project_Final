@@ -133,9 +133,9 @@
             label3.Font = new Font("Microsoft Sans Serif", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(201, 24);
             label3.Name = "label3";
-            label3.Size = new Size(213, 42);
+            label3.Size = new Size(257, 42);
             label3.TabIndex = 24;
-            label3.Text = "ADD TYPE";
+            label3.Text = "Create  Exam";
             // 
             // btnDelete
             // 
